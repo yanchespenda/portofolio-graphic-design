@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import Project from '../components/Project'
+import Work from './Work'
 
 interface IPropsList {
   src: string
@@ -12,7 +12,7 @@ interface IProps {
   list: IPropsList[]
 }
 
-export default function ProjectContainer({ list }: IProps) {
+export default function WorkContainer({ list }: IProps) {
 
   return (
     <Fragment>
@@ -21,7 +21,7 @@ export default function ProjectContainer({ list }: IProps) {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center justify-center content-center items-center">
         {
-          list.map((item, index) => <Project key={index} src={item.src} title={item.title} slug={item.slug} description={item.description} /> )
+          list.map((item, index) => <Work key={index} src={item.src} title={item.title} slug={item.slug} description={item.description} /> )
         }
       </div>
     </Fragment>
