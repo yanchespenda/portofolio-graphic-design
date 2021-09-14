@@ -3,8 +3,6 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 import ProjectContainer from '../components/ProjectContainer'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
 import Profile from '../components/Profile'
 
 const listProject = [
@@ -55,8 +53,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
-
       <main className="xl:container mt-8">
 
         <Profile />
@@ -66,8 +62,6 @@ const Home: NextPage = () => {
         {/* End List Project */}
 
       </main>
-
-      <Footer />
 
     </div>
   )

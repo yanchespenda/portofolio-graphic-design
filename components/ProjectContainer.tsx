@@ -5,6 +5,7 @@ interface IPropsList {
   src: string
   title: string
   slug: string
+  description: string
 }
 
 interface IProps {
@@ -20,7 +21,7 @@ export default function ProjectContainer({ list }: IProps) {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center justify-center content-center items-center">
         {
-          list.map((item, index) => <Project key={index} src={item.src} title={item.title} slug={item.slug} /> )
+          list.map((item, index) => <Project key={index} src={item.src} title={item.title} slug={item.slug} description={item.description} /> )
         }
       </div>
     </Fragment>

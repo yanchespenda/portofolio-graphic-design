@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link'
 import { useEffect, useState } from 'react';
 
 export default function Header() {
+  const router = useRouter()
 
   const [scrolled, setScrolled] = useState(false)
 
@@ -18,7 +20,7 @@ export default function Header() {
   return (
 
     <nav className="flex justify-center w-full h-24">
-      <div className={[scrolled ? 'shadow-xl' : '' ,"w-full fixed bg-white transition-shadow duration-250 ease-in-out"].join(' ')}>
+      <div className={[scrolled ? 'shadow-xl' : '' ,"z-[4] w-full fixed bg-white transition-shadow duration-250 ease-in-out"].join(' ')}>
         <div className="flex justify-center p-4 rounded-b xl:container mx-auto">
 
           {/* Logo */}
@@ -54,13 +56,13 @@ export default function Header() {
 
           {/* Menu */}
           <div className="flex flex-row space-x-4 h-16 items-center">
-            <Link href="/projects">
-              <a className="uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1 border-opacity-0">
+            <Link href="/works">
+              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname.search(/\/works|\/work/) !== -1 ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
                 <span>Works</span>
               </a>
             </Link>
-            <Link href="/contact">
-              <a className="uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1 border-opacity-0">
+            <Link href="/about">
+              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname == "/about" ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
                 <span>About</span>
               </a>
             </Link>
