@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 export default function Header() {
   const router = useRouter()

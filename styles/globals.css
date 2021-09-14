@@ -4,6 +4,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
 
+@import '/node_modules/react-grid-layout/css/styles.css';
+@import '/node_modules/react-resizable/css/styles.css';
+
 :root {
   --primary: #080B1A;
   --secondary: #9E8B7A;
