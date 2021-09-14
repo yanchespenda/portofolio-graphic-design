@@ -21,11 +21,11 @@ export default function Project({src, slug, title, description, hover}: IProps) 
   const hoverDescriptionColor = hover?.descriptionColor ? `text-[${hover?.descriptionColor}]` : 'text-white'
 
   return (
-    <div className="flex flex-col items-center justify-center relative">
       <Link href={"/work/" + slug}>
-        <a className="relative">
+        <a className="flex flex-col items-center justify-center relative">
           <LazyLoadImage
             className="w-full z-[1]"
+            wrapperClassName="w-full h-full"
             alt={title}
             effect="opacity"
             src={src} />
@@ -38,6 +38,5 @@ export default function Project({src, slug, title, description, hover}: IProps) 
           </div>
         </a>
       </Link>
-    </div>
   )
 }
