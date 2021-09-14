@@ -10,20 +10,14 @@ interface IProps {
 export default function Project({src, slug, title}: IProps) {
 
   return (
-    <div className="w-full lg:w-1/4">
+    <div className="flex flex-col items-center justify-center">
       <Link href={"/project/" + slug}>
         <a>
-          <div className="flex flex-col items-center justify-center p-1">
-            <LazyLoadImage
-              className=""
-              alt={title}
-              effect="opacity"
-              src={src} />
-
-            <div className="mt-2 mb-4">
-              <span>{ title }</span>
-            </div>
-          </div>
+          <LazyLoadImage
+            className="w-full"
+            alt={title}
+            effect="opacity"
+            src={src} />
         </a>
       </Link>
     </div>
