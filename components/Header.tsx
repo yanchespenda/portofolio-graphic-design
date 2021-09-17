@@ -57,12 +57,12 @@ export default function Header() {
           {/* Menu */}
           <div className="flex flex-row space-x-4 h-16 items-center">
             <Link href="/works">
-              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname.search(/\/works|\/work/) !== -1 ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
+              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname.search(/\/works|\/work/) !== -1 && router.pathname.search(/\/console/) === -1 ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
                 <span>Works</span>
               </a>
             </Link>
             <Link href="/about">
-              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname == "/about" ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
+              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname == "/about" && router.pathname.search(/\/console/) === -1 ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
                 <span>About</span>
               </a>
             </Link>
