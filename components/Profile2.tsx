@@ -15,7 +15,7 @@ export default function Profile() {
               opacity={0}
               ease={Back.easeOut.config(2)}
               target={
-                <div className="flex flex-col">
+                <div className="flex flex-col" style={{opacity: 0}}>
                   {/* Initial Name */}
                   <span className="text-6xl">Hi,<br />I am <span className="text-[#9E8B7A]">Hilmi</span>.</span>
                   {/* End Initial Name */}
@@ -35,7 +35,7 @@ export default function Profile() {
               opacity={0}
               ease={Back.easeOut.config(2)}
               target={
-                <div>
+                <div style={{opacity: 0}}>
                   <svg width="524" height="479" viewBox="0 0 524 479" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                     <rect width="524" height="479" fill="url(#pattern0)"/>
                     <defs>
