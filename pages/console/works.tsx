@@ -46,9 +46,13 @@ export default function ConsoleWorks() {
         
       }
 
-      const getAdmin = ref(database, 'works/' + hostname)
-      get(getAdmin).then((snapshot: any) => {
+      const getList = ref(database, 'works/' + hostname)
+      get(getList).then((snapshot: any) => {
+        console.log('getList:snapshot', snapshot)
+        // console.log('getList:getKey', snapshot.getKey())
         const data: BaseDatabaseWorksList[] = snapshot.val()
+        console.log('getList:data', data)
+        // data.forEach(item => console.log('item', item?.getKey() ))
         console.log('data', data)
         if (data) {
           setListWorks(data)
@@ -72,7 +76,7 @@ export default function ConsoleWorks() {
   return (
     <Fragment>
       <ConsoleHeader />
-      
+
       <div className="xl:container mx-auto mt-8">
         <div className="flex flex-col">
           <div className="mb-16">

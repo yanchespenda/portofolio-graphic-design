@@ -25,7 +25,7 @@ export default function ConsoleHeader() {
 
     const initBreadcumbs = () => {
       const segments = Segments(router.asPath)
-      console.log('segments', segments)
+      // console.log('segments', segments)
 
       let currentBreadcumb: BreadcumbsData[] = []
       if (segments[1]) {
@@ -92,7 +92,7 @@ export default function ConsoleHeader() {
                       breadcumbs.map((breadcumb, index) => {
                         if (index === breadcumbs.length - 1) {
                           return (
-                            <li className="px-4 text-black">{ breadcumb.title }</li>
+                            <li className="px-4 text-black" key={index}>{ breadcumb.title }</li>
                           )
                         }
                         return (
@@ -121,12 +121,12 @@ export default function ConsoleHeader() {
               </a>
             </Link>
             <Link href="/console/works">
-              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname.search(/\/console\\works/) !== -1  ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
+              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname.search(/\/console\/works/) !== -1  ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
                 <span>Work List</span>
               </a>
             </Link>
             <Link href="/console/settings">
-              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname.search(/\/console\\settings/) !== -1  ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
+              <a className={["uppercase flex flex-col align-middle text-center hover:border-opacity-100 border-[#9E8B7A] border-b-4 mt-1", router.pathname.search(/\/console\/settings/) !== -1  ? 'border-opacity-100' : 'border-opacity-0'].join(' ')}>
                 <span>Settings</span>
               </a>
             </Link>
