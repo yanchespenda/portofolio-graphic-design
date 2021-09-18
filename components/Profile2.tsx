@@ -12,6 +12,7 @@ export default function Profile() {
 
           <div className="w-full lg:w-1/2">
             <Timeline
+              opacity={0}
               ease={Back.easeOut.config(2)}
               target={
                 <div className="flex flex-col">
@@ -31,6 +32,7 @@ export default function Profile() {
 
           <div className="w-full lg:w-1/2">
             <Timeline
+              opacity={0}
               ease={Back.easeOut.config(2)}
               target={
                 <div>
@@ -53,6 +55,7 @@ export default function Profile() {
         </div>
 
         <Timeline
+          opacity={0}
           ease={Back.easeOut.config(2)}
           target={
             <div className="flex flex-col items-center justify-center absolute bottom-0 right-0 left-0">
