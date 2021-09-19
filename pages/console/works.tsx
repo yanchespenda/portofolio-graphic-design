@@ -11,7 +11,7 @@ import { firebaseApp, hostname } from "../../firebase/init"
 export default function ConsoleWorks() {
 
   const router = useRouter()
-  const [isValidateAuth, setIsValidateAuth] = useState(false)
+  const [isValidateAuth, setIsValidateAuth] = useState(true)
 
   const [isWorksLoading, setIsWorksLoading] = useState(false)
   const [listWorks, setListWorks] = useState<BaseDatabaseWorksList[]>([])

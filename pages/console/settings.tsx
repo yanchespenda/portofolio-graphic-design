@@ -8,7 +8,7 @@ import { firebaseApp } from "../../firebase/init"
 export default function ConsoleSettings() {
 
   const router = useRouter()
-  const [isValidateAuth, setIsValidateAuth] = useState(false)
+  const [isValidateAuth, setIsValidateAuth] = useState(true)
 
   useEffect(() => {
     setIsValidateAuth(true)

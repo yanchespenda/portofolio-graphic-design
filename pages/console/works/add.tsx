@@ -1,7 +1,7 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { NextRouter, useRouter, withRouter } from "next/router"
+import { NextRouter, withRouter } from "next/router"
 import dynamic from 'next/dynamic'
-import { Component, Fragment, useEffect, useRef, useState } from "react"
+import { Component, Fragment } from "react"
 import Dropzone, { DropEvent, FileRejection } from 'react-dropzone'
 import { Formik } from 'formik'
 import { convertToRaw, EditorState, Modifier } from 'draft-js'

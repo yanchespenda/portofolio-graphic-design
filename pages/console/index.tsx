@@ -8,7 +8,7 @@ import ConsoleHeader from '../../components/console/Header'
 
 export default function ConsoleIndex() {
   const router = useRouter()
-  const [isValidateAuth, setIsValidateAuth] = useState(false)
+  const [isValidateAuth, setIsValidateAuth] = useState(true)
 
   useEffect(() => {
     setIsValidateAuth(true)
