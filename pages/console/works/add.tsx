@@ -1,21 +1,25 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { NextRouter, withRouter } from "next/router"
 import dynamic from 'next/dynamic'
-import { Component, Fragment } from "react"
+import { Component, Fragment, createRef, RefObject } from "react"
 import Dropzone, { DropEvent, FileRejection } from 'react-dropzone'
 import { Formik } from 'formik'
+
 import { convertToRaw, EditorState, Modifier } from 'draft-js'
+import Editor, { createEditorStateWithText } from '@draft-js-plugins/editor'
+import createSideToolbarPlugin from '@draft-js-plugins/side-toolbar'
 
 import ConsoleHeader from '../../../components/console/Header'
 import { firebaseApp } from "../../../firebase/init"
 
-import { EditorProps } from 'react-draft-wysiwyg'
-const Editor = dynamic<EditorProps>(
-  () => import('react-draft-wysiwyg').then(mod => mod.Editor),
-  { ssr: false }
-)
+import '@draft-js-plugins/side-toolbar/lib/plugin.css'
+import editorStyles from './add.module.scss'
 
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+const sideToolbarPlugin = createSideToolbarPlugin()
+const { SideToolbar } = sideToolbarPlugin
+const plugins = [sideToolbarPlugin]
+const text = ''
+
 
 interface IProps {
   router: NextRouter
@@ -27,6 +31,7 @@ interface IState {
   imageCoverPreview: string | null
 
   contentEditor: EditorState
+  editorRef: RefObject<Editor>
 }
 
 class ConsoleWorksAdd extends Component<IProps, IState> {
@@ -37,9 +42,11 @@ class ConsoleWorksAdd extends Component<IProps, IState> {
       imageCover: null,
       imageCoverPreview: null,
       contentEditor: EditorState.createEmpty(),
+      editorRef: createRef<Editor>()
     }
 
     this.contentEditorRefresh = this.contentEditorRefresh.bind(this)
+    this.editorFocus = this.editorFocus.bind(this)
   }
 
   async validateAuth() {
@@ -76,6 +83,12 @@ class ConsoleWorksAdd extends Component<IProps, IState> {
 
     const imageFile = acceptedFiles.length > 0 ? acceptedFiles[0] : null
     if (imageFile) this.handleFile(imageFile)
+  }
+
+  editorFocus() {
+    if (this.state.editorRef.current) {
+      this.state.editorRef.current.focus()
+    }
   }
 
   render() {
@@ -174,189 +187,15 @@ class ConsoleWorksAdd extends Component<IProps, IState> {
                   <div className="w-full mt-8">
                     <label htmlFor="content">Content</label>
                     {/* <input type="text" name="content" id="content" className="border mt-1 form-input px-4 py-3 rounded w-full" /> */}
-
-                    <Editor
-                      editorState={this.state.contentEditor}
-                      wrapperClassName="demo-wrapper"
-                      editorClassName="demo-editor"
-                      onEditorStateChange={this.contentEditorRefresh}
-
-                      toolbar={
-                        {
-                          options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji'],
-                          inline: {
-                            inDropdown: false,
-                            className: undefined,
-                            component: undefined,
-                            dropdownClassName: undefined,
-                            options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace', 'superscript', 'subscript'],
-                            bold: {
-                              icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0xNS42IDEwLjc5Yy45Ny0uNjcgMS42NS0xLjc3IDEuNjUtMi43OSAwLTIuMjYtMS43NS00LTQtNEg3djE0aDcuMDRjMi4wOSAwIDMuNzEtMS43IDMuNzEtMy43OSAwLTEuNTItLjg2LTIuODItMi4xNS0zLjQyek0xMCA2LjVoM2MuODMgMCAxLjUuNjcgMS41IDEuNXMtLjY3IDEuNS0xLjUgMS41aC0zdi0zem0zLjUgOUgxMHYtM2gzLjVjLjgzIDAgMS41LjY3IDEuNSAxLjVzLS42NyAxLjUtMS41IDEuNXoiLz48L3N2Zz4=',
-                              className: undefined },
-                            italic: {
-                              // icon: 'italic',
-                              className: undefined },
-                            underline: {
-                              // icon: 'underline',
-                              className: undefined },
-                            strikethrough: {
-                              // icon: 'strikethrough',
-                              className: undefined },
-                            monospace: {
-                              // icon: 'monospace',
-                              className: undefined },
-                            superscript: {
-                              // icon: 'superscript',
-                              className: undefined },
-                            subscript: {
-                              // icon: 'subscript',
-                              className: undefined },
-                          },
-                          blockType: {
-                            inDropdown: true,
-                            options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Blockquote', 'Code'],
-                            className: undefined,
-                            component: undefined,
-                            dropdownClassName: undefined,
-                          },
-                          fontSize: {
-                            // icon: 'fontSize',
-                            options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96],
-                            className: undefined,
-                            component: undefined,
-                            dropdownClassName: undefined,
-                          },
-                          list: {
-                            inDropdown: false,
-                            className: undefined,
-                            component: undefined,
-                            dropdownClassName: undefined,
-                            options: ['unordered', 'ordered', 'indent', 'outdent'],
-                            unordered: { 
-                              // icon: 'unordered', 
-                              className: undefined },
-                            ordered: { 
-                              // icon: 'ordered', 
-                              className: undefined },
-                            indent: { 
-                              // icon: 'indent', 
-                              className: undefined },
-                            outdent: { 
-                              // icon: 'outdent', 
-                              className: undefined },
-                          },
-                          textAlign: {
-                            inDropdown: false,
-                            className: undefined,
-                            component: undefined,
-                            dropdownClassName: undefined,
-                            options: ['left', 'center', 'right', 'justify'],
-                            left: { 
-                              // icon: 'left', 
-                              className: undefined },
-                            center: { 
-                              // icon: 'center', 
-                              className: undefined },
-                            right: { 
-                              // icon: 'right', 
-                              className: undefined },
-                            justify: { 
-                              // icon: 'justify', 
-                              className: undefined },
-                          },
-                          colorPicker: {
-                            // icon: 'color',
-                            className: undefined,
-                            component: undefined,
-                            popupClassName: undefined,
-                            colors: ['rgb(97,189,109)', 'rgb(26,188,156)', 'rgb(84,172,210)', 'rgb(44,130,201)',
-                              'rgb(147,101,184)', 'rgb(71,85,119)', 'rgb(204,204,204)', 'rgb(65,168,95)', 'rgb(0,168,133)',
-                              'rgb(61,142,185)', 'rgb(41,105,176)', 'rgb(85,57,130)', 'rgb(40,50,78)', 'rgb(0,0,0)',
-                              'rgb(247,218,100)', 'rgb(251,160,38)', 'rgb(235,107,86)', 'rgb(226,80,65)', 'rgb(163,143,132)',
-                              'rgb(239,239,239)', 'rgb(255,255,255)', 'rgb(250,197,28)', 'rgb(243,121,52)', 'rgb(209,72,65)',
-                              'rgb(184,49,47)', 'rgb(124,112,107)', 'rgb(209,213,216)'],
-                          },
-                          link: {
-                            inDropdown: false,
-                            className: undefined,
-                            component: undefined,
-                            popupClassName: undefined,
-                            dropdownClassName: undefined,
-                            showOpenOptionOnHover: true,
-                            defaultTargetOption: '_self',
-                            options: ['link', 'unlink'],
-                            link: { 
-                              // icon: 'link', 
-                              className: undefined },
-                            unlink: { 
-                              // icon: 'unlink', 
-                              className: undefined },
-                            linkCallback: undefined
-                          },
-                          emoji: {
-                            // icon: 'emoji',
-                            className: undefined,
-                            component: undefined,
-                            popupClassName: undefined,
-                            emojis: [
-                              '😀', '😁', '😂', '😃', '😉', '😋', '😎', '😍', '😗', '🤗', '🤔', '😣', '😫', '😴', '😌', '🤓',
-                              '😛', '😜', '😠', '😇', '😷', '😈', '👻', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🙈',
-                              '🙉', '🙊', '👼', '👮', '🕵', '💂', '👳', '🎅', '👸', '👰', '👲', '🙍', '🙇', '🚶', '🏃', '💃',
-                              '⛷', '🏂', '🏌', '🏄', '🚣', '🏊', '⛹', '🏋', '🚴', '👫', '💪', '👈', '👉', '👉', '👆', '🖕',
-                              '👇', '🖖', '🤘', '🖐', '👌', '👍', '👎', '✊', '👊', '👏', '🙌', '🙏', '🐵', '🐶', '🐇', '🐥',
-                              '🐸', '🐌', '🐛', '🐜', '🐝', '🍉', '🍄', '🍔', '🍤', '🍨', '🍪', '🎂', '🍰', '🍾', '🍷', '🍸',
-                              '🍺', '🌍', '🚑', '⏰', '🌙', '🌝', '🌞', '⭐', '🌟', '🌠', '🌨', '🌩', '⛄', '🔥', '🎄', '🎈',
-                              '🎉', '🎊', '🎁', '🎗', '🏀', '🏈', '🎲', '🔇', '🔈', '📣', '🔔', '🎵', '🎷', '💰', '🖊', '📅',
-                              '✅', '❎', '💯',
-                            ],
-                          },
-                          embedded: {
-                            // icon: 'embedded',
-                            className: undefined,
-                            component: undefined,
-                            popupClassName: undefined,
-                            embedCallback: undefined,
-                            defaultSize: {
-                              height: 'auto',
-                              width: 'auto',
-                            },
-                          },
-                          image: {
-                            // icon: 'image',
-                            className: undefined,
-                            component: undefined,
-                            popupClassName: undefined,
-                            urlEnabled: true,
-                            uploadEnabled: true,
-                            alignmentEnabled: true,
-                            uploadCallback: undefined,
-                            previewImage: false,
-                            inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
-                            alt: { present: false, mandatory: false },
-                            defaultSize: {
-                              height: 'auto',
-                              width: 'auto',
-                            },
-                          },
-                          remove: { 
-                            // icon: 'eraser', 
-                            className: undefined, component: undefined },
-                          history: {
-                            inDropdown: false,
-                            className: undefined,
-                            component: undefined,
-                            dropdownClassName: undefined,
-                            options: ['undo', 'redo'],
-                            undo: { 
-                              // icon: 'undo', 
-                              className: undefined },
-                            redo: { 
-                              // icon: 'redo', 
-                              className: undefined },
-                          },
-                        }
-                      }
-                    />
+                    <div className={editorStyles.editor} onClick={this.editorFocus}>
+                      <Editor
+                        editorState={this.state.contentEditor}
+                        onChange={this.contentEditorRefresh}
+                        plugins={plugins}
+                        ref={this.state.editorRef}
+                      />
+                      <SideToolbar />
+                    </div>
                   </div>
                   {/* End Step 4: Content */}
 
