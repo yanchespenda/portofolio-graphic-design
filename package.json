@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@draft-js-plugins/editor": "^4.1.0",
+    "@draft-js-plugins/side-toolbar": "^5.0.0",
     "@headlessui/react": "^1.4.1",
     "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/forms": "^0.3.3",
@@ -19,23 +21,21 @@
     "gsap": "^3.7.1",
     "localforage": "^1.10.0",
     "next": "11.1.2",
-    "patch-package": "^6.4.7",
     "postcss": "^8.3.6",
-    "postinstall-postinstall": "^2.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-draft-wysiwyg": "^1.14.7",
     "react-dropzone": "^11.4.0",
     "react-gsap": "^3.2.1",
     "react-lazy-load-image-component": "^1.5.1",
     "tailwindcss": "^2.2.15"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.11.5",
     "@types/react": "17.0.20",
-    "@types/react-draft-wysiwyg": "^1.13.3",
     "@types/react-lazy-load-image-component": "^1.5.2",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
+    "sass": "^1.42.0",
     "typescript": "4.4.3"
   }
 }
